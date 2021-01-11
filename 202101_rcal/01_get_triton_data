@@ -1,0 +1,43 @@
+# Get Triton data from original files
+
+# sed:
+# - select liens below TotalPoints
+# - skip TotalPoints line itself
+# - remove \r end-of-line char
+# - add t0 column
+# - add third column in the second file (missing T_MC_Cernox data)
+# awk:
+# - reshape columns, add t0
+
+for d in 20210106 20210108; do
+  f="$d/Triton Cooldown/Triton Cooldown.txt"
+  if [ $d = 20210106 ]; then t0=1609933749; cmd=''; fi
+  if [ $d = 20210108 ]; then t0=1610114275; cmd='s/^([^\t]*)\t/\1\t-\t/'; fi
+  sed -r -n '
+    /^TotalPoints:/,$ {
+      /^TotalPoints/d;
+      s/\r//;
+      s/(.*)/\1\t'$t0'/;
+      '$cmd'
+      p
+    }' "$f"
+done |
+awk '
+  $2>300 {$2="0"}
+  $3==72.819 {$3="0"}
+  {printf "%.3f %f %f\n", $5+$6, $2, $3}' > T.dat
+
+# split files for RuOx, remove zeros and repeated values
+# cut last point for Cernox
+
+awk '
+  BEGIN {print "# time T_Cernox"; old=0};
+  $2>0 && $2!=old && $1<1610113956 {print $1,$2; old=$2}
+' < T.dat > T_Cernox.dat
+
+awk '
+  BEGIN {print "# time T_RuOx"; old=0};
+  $3>0 && $3!=old {print $1,$3; old=$3}
+' < T.dat > T_RuOx.dat
+
+rm -f T.dat
