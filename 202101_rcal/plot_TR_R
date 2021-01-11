@@ -1,6 +1,6 @@
 #!/usr/bin/gnuplot
 
-set xlabel "T Cernox"
+set xlabel "T RuOx"
 set ylabel "R1,2,3,4"
 set log x
 plot [] []\

@@ -1,0 +1,10 @@
+#!/usr/bin/gnuplot
+
+set xlabel "T"
+set ylabel "R5"
+set log
+plot [1:] []\
+  "data_pairs/TC-R5.dat" u 2:($3) w lp pt 7 ps 0.5 title "T Cernox",\
+  "data_pairs/TR-R5.dat" u 2:($3) w lp pt 7 ps 0.5 title "T RuOx",\
+
+pause -1

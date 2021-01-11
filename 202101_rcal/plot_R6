@@ -1,0 +1,12 @@
+#!/usr/bin/gnuplot
+
+t0 = 1609862308.174
+
+set xlabel "time, s"
+set ylabel "R, Ohm"
+set log y
+
+plot [] []\
+  "data1/R6_slow.dat" u ($1-t0):($2) w l title "R6",\
+
+pause -1
