@@ -1,0 +1,17 @@
+# What to skip in slow data
+# Time is measured from t0 = 1609862308.174
+
+# R time1 time2
+
+1 271500 273900 # strange overeating
+4 259500 260900 # strange overeating
+
+1 253700 254200  # tried small power, large noise
+2 253700 254200  # -//-
+3 253700 254200  # -//-
+4 253700 254200  # -//-
+
+1 252000 252400  # too large power (should we start skip a bit earlier?)
+2 252000 252400
+3 252000 252400
+4 252000 252400

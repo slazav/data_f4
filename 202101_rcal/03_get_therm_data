@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+
+# Extract "thermalization data" data for resistor calibrations (R1..R4).
+# R<n>.dat -> R<n>_slow.dat
+# Timings are taken from data_therm_periods file
+import numpy
+import matplotlib.pyplot as plt
+import scipy.optimize
+
+tskip = 200; # always skip some time in the beginning
+
+lst = numpy.loadtxt("data_therm_periods", unpack=True, usecols=(0,1,2,3));
+
+for n in (1,2,3,4):
+
+  # load resistance data
+  data = numpy.loadtxt("R%d.dat"%(n), comments='#', unpack=True, usecols=(0,1,3));
+  s = len(data[0])
+
+  m=-1
+  for j in range(0, len(lst[0])):
+    if lst[2][j] != n: continue
+    m=m+1
+    t1 = lst[0][j]
+    t2 = lst[1][j]
+
+    ii = numpy.logical_and(data[0] >= t1 + tskip, data[0] <t2)
+    data_t = data[0][ii]
+    data_r = data[1][ii]
+    data_p = data[2][ii]
+    data_t = data_t - data_t[0]
+    pwr = numpy.mean(data_p)
+    print(n, lst[0][j], lst[1][j], pwr)
+
+    # fitting function
+    def fitfunc(pars, t):
+      return pars[0] + pars[1]*t + pars[2]*numpy.exp(-t/pars[3])
+
+    def minfunc(pars, t, f0):
+      return numpy.linalg.norm(fitfunc(pars,t)-f0)
+
+    pars = (1,1,1,500);
+    res = scipy.optimize.minimize(minfunc, pars, (data_t, data_r),
+      options={'disp': False, 'maxiter': 1000})
+    pars = res.x
+
+    plt.clf();
+    plt.plot(data_t, data_r, 'b.', label = '')
+    plt.plot(data_t, fitfunc(pars, data_t), 'r-', label = '')
+    plt.xlabel('time, seconds')
+    plt.ylabel('resistance, Ohm')
+    plt.title('R%d, pwr=%.2e W, tau=%.0f'%(n,pwr,pars[3]))
+    plt.savefig("R%d_th%02d.png" %(n,m))
+

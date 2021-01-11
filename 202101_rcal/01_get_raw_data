@@ -1,0 +1,9 @@
+# Download all resistance bridge data
+# to R1.dat ... R6.dat
+
+d1=1609862308
+d2=$(date -d "2021-01-11 13:00:00" +%s)
+
+for n in 1 2 3 4 5 6; do
+  device_c ask graphene "get_range 202101_rcal$n $d1 $d2" > R$n.dat
+done
