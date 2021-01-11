@@ -1,0 +1,11 @@
+#!/usr/bin/gnuplot
+
+set xlabel "R1"
+set ylabel "R2,3,4/R1"
+
+plot [] []\
+  "data_pairs/R1-R2.dat" u 2:($3/$2) w lp pt 7 ps 0.5,\
+  "data_pairs/R1-R3.dat" u 2:($3/$2) w lp pt 7 ps 0.5,\
+  "data_pairs/R1-R4.dat" u 2:($3/$2) w lp pt 7 ps 0.5,\
+
+pause -1

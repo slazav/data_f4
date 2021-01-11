@@ -1,0 +1,12 @@
+#!/usr/bin/gnuplot
+
+set xlabel "T Cernox"
+set ylabel "R1,2,3,4"
+set log x
+plot [] []\
+  "data_pairs/TC-R1.dat" u 2:($3) w lp pt 7 ps 0.5,\
+  "data_pairs/TC-R2.dat" u 2:($3) w lp pt 7 ps 0.5,\
+  "data_pairs/TC-R3.dat" u 2:($3) w lp pt 7 ps 0.5,\
+  "data_pairs/TC-R4.dat" u 2:($3) w lp pt 7 ps 0.5,\
+
+pause -1
