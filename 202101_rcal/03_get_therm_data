@@ -14,7 +14,7 @@ lst = numpy.loadtxt("data_therm_periods", unpack=True, usecols=(0,1,2,3));
 for n in (1,2,3,4):
 
   # load resistance data
-  data = numpy.loadtxt("R%d.dat"%(n), comments='#', unpack=True, usecols=(0,1,3));
+  data = numpy.loadtxt("data1/R%d.dat"%(n), comments='#', unpack=True, usecols=(0,1,3));
   s = len(data[0])
 
   m=-1
