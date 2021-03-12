@@ -1,0 +1,12 @@
+#!/usr/bin/gnuplot
+
+t0 = 1609862308.174
+
+#set log y
+
+plot [246000:252000] []\
+  "R1_slow.dat"  u ($1-t0):($2/50) w l title "R1",\
+  "T_Cernox.dat" u ($1-t0):($2) w l title "T Cernox",\
+  "T_RuOx.dat"   u ($1-t0):($2) w l title "T RuOx",\
+
+pause -1

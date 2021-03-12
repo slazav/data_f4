@@ -7,3 +7,6 @@ Thermometers:
 
 Triton temperature data can be seen at
 https://www.lancaster.ac.uk/pg/thompsom/Triton/
+
+  RC - cernox thermometer, calibrated 1.2K .. 290K
+  RR - RuO thermometer, calibrated 50mK (lower points is some extrapolation) .. 150K

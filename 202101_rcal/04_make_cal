@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+
+# Make calibration pairs: R1-R2 from slow data and triton data
+# data1 -> data_pairs
+
+import numpy
+import matplotlib.pyplot as plt
+import scipy.optimize
+import os
+
+os.makedirs('data_cal', exist_ok=True)
+
+R1 = numpy.loadtxt("data1/R1_slow.dat", unpack=True, usecols=(0,1));
+R2 = numpy.loadtxt("data1/R2_slow.dat", unpack=True, usecols=(0,1));
+R3 = numpy.loadtxt("data1/R3_slow.dat", unpack=True, usecols=(0,1));
+R4 = numpy.loadtxt("data1/R4_slow.dat", unpack=True, usecols=(0,1));
+R5 = numpy.loadtxt("data1/R5_slow.dat", unpack=True, usecols=(0,1));
+R6 = numpy.loadtxt("data1/R6_slow.dat", unpack=True, usecols=(0,1));
+TC = numpy.loadtxt("data1/T_Cernox.dat", unpack=True, usecols=(0,1));
+TR = numpy.loadtxt("data1/T_RuOx.dat",   unpack=True, usecols=(0,1));
+
+def mk_cal(name, TC, TR, R):
+  # interpolate temperatures to data points
+  TCi=numpy.interp(R[0], TC[0],TC[1])
+  TRi=numpy.interp(R[0], TR[0],TR[1])
+  # select temperature ranges
+  I1 = TCi > 4.2
+  I2 = (TRi > 0.02) & (TRi < 4.2)
+
+  # concatenate two temperature ranges
+  T0 = numpy.concatenate((TCi[I1], TRi[I2]))
+  R0 = numpy.concatenate((R[1][I1], R[1][I2]))
+
+  # sort data
+  ii = numpy.argsort(T0);
+  T0 = T0[ii]
+  R0 = R0[ii]
+
+  numpy.savetxt('data_cal/' + name + '.dat', numpy.column_stack((T0,R0)),
+      fmt='%f %f')
+
+mk_cal("R1", TC, TR, R1)
+mk_cal("R2", TC, TR, R2)
+mk_cal("R3", TC, TR, R3)
+mk_cal("R4", TC, TR, R4)
+mk_cal("R5", TC, TR, R5)
+mk_cal("R6", TC, TR, R6)

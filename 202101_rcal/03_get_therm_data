@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 # Extract "thermalization data" data for resistor calibrations (R1..R4).
-# R<n>.dat -> R<n>_slow.dat
 # Timings are taken from data_therm_periods file
 import numpy
 import matplotlib.pyplot as plt

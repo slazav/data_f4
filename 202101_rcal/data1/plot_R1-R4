@@ -1,0 +1,19 @@
+#!/usr/bin/gnuplot
+
+t0 = 1609862308.174
+
+v1=44.45
+v2=46.34
+v3=47.49
+v4=39.81
+
+set xlabel "time, s"
+set ylabel "R, Ohm"
+
+plot [] []\
+  "R1_slow.dat" u ($1-t0):($2) w l title "R1",\
+  "R2_slow.dat" u ($1-t0):($2) w l title "R2",\
+  "R3_slow.dat" u ($1-t0):($2) w l title "R3",\
+  "R4_slow.dat" u ($1-t0):($2) w l title "R4",\
+
+pause -1

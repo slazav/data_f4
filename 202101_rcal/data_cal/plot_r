@@ -1,0 +1,15 @@
+#!/usr/bin/gnuplot
+
+set xlabel "T"
+set ylabel "log10(R1,2,3,4)"
+
+set log
+plot [] []\
+  "R1.dat" u 1:2 w lp pt 7 ps 0.5,\
+  "R2.dat" u 1:2 w lp pt 7 ps 0.5,\
+  "R3.dat" u 1:2 w lp pt 7 ps 0.5,\
+  "R4.dat" u 1:2 w lp pt 7 ps 0.5,\
+  "R5.dat" u 1:2 w lp pt 7 ps 0.5,\
+  "R6.dat" u 1:2 w lp pt 7 ps 0.5,\
+
+pause -1

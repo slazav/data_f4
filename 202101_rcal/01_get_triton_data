@@ -1,7 +1,7 @@
 # Get Triton data from original files to data1/R_Cernox.dat, data1/R_RuOx.dat
 
 # sed:
-# - select liens below TotalPoints
+# - select lines below TotalPoints
 # - skip TotalPoints line itself
 # - remove \r end-of-line char
 # - add t0 column
