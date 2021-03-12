@@ -2,12 +2,13 @@ for i in 1 2 3 4; do
   ../mk_cal.py --colx 0 --coly 1 --xfunc log10 --yfunc log10 --xlabel T --ylabel R \
      --npts 100 --degree 3 --minfitpts 50 --win 5 --le_pts 1 --le_win 20 --re_pts 2\
      --png R${i}.png  R${i}.dat |
-   awk 'BEGIN {print "# R,Ohm - T, K"}; $1>-100 {print 10^$2, 10^$1}' > R${i}_.dat
+   awk 'BEGIN {print "# R,Ohm - T, K"}; $1>-100 {print 10^$2, 10^$1}' > OH2020-${i}.dat
 done
 
 # only <70K, above use official calibration
 ../mk_cal.py --colx 0 --coly 1 --xmin 4.2 --xmax 70 --ymax 1080  --yfunc log10 --xlabel T --ylabel R \
-   --npts 100 --degree 3 --minfitpts 50 --win 5 --png R5.png  R5.dat > R5_.dat
+   --npts 100 --degree 3 --minfitpts 50 --win 5 --png R5.png  R5.dat |
+awk 'BEGIN {print "# R,Ohm - T, K"}; $1>-100 {print 10^$2, $1}' > PT2020-5.dat
 
 
 #../mk_cal.py --colx 0 --coly 1 --xfunc log10 --yfunc log10  --xlabel T --ylabel R \
